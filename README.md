@@ -27,7 +27,6 @@ sudo docker run -d \
 -v ./logs:/opt/traccar/logs:rw \
 -v ./data:/opt/traccar/data:rw \
 -v ./media:/opt/traccar/media:rw \
--v ./conf/traccar.xml:/opt/traccar/conf/traccar.xml:ro \
 gpproton/traccar:latest
 ```
 
