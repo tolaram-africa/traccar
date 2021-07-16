@@ -1,21 +1,33 @@
-version: "3.3"
+version: "3.9"
 
 services:
   traccar:
     image: gpproton/traccar:latest
     volumes:
-      - ./logs:/opt/traccar/logs:rw
+      - ./logs/:/opt/traccar/logs:rw
+      - ./data/:/opt/traccar/data:rw
+      - ./media/:/opt/traccar/media:rw
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     env_file: .env.sample
     command: java -Xms512m -Xmx4096m -Djava.net.preferIPv4Stack=true -jar /opt/traccar/tracker-server.jar /opt/traccar/conf/traccar.xml
-    ulimits:
-      rtprio: 95
-      memlock: -1
-      nproc: 1024000
-      nofile:
-        soft: 1024000
-        hard: 1024000
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        max_replicas_per_node: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "2"
+          memory: 4G
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8082/"]
       interval: 35s
