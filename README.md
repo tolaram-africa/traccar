@@ -16,7 +16,7 @@ sudo docker run -d \
 -e BACK_LOGO_WIDTH=52 \
 -e SETUP_COLOR="808080" \
 -e GEOCODE_LINK="https://nominatim.openstreetmap.org/" \
--e GEOCODE_LINK="https://nominatim.openstreetmap.org/" \
+-e GOOGLE_API_KEY="google-api-key" \
 --ulimit nofile=10240000:10240000 \
 --ulimit nproc=10240000:10240000 \
 -p 8082:8082 \
