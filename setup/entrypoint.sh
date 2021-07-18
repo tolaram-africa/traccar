@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# DEfaults
+SETUP_TITLE=${SETUP_TITLE:="GPS Track"}
+ATTRIB_NAME=${ATTRIB_NAME:="Traccar"}
+ATTRIB_LINK=${ATTRIB_LINK:="https://traccar.org"}
+SETUP_COLOR=${SETUP_COLOR:="01162B"}
+GEOCODE_LINK=${GEOCODE_LINK:="https://nominatim.openstreetmap.org/"}
+PLAY_LINK=${PLAY_LINK:="#"}
+FRONT_LOGO_WIDTH=${FRONT_LOGO_WIDTH:="108"}
+FRONT_LOGO_HEIGHT=${FRONT_LOGO_HEIGHT:="32"}
+GOOGLE_API_KEY=${GOOGLE_API_KEY:="api-key"}
+BACK_LOGO_WIDTH=${BACK_LOGO_WIDTH:="82"}
+BACK_LOGO_HEIGHT=${BACK_LOGO_HEIGHT:="27"}
+
 ## Set for production mode
 sed -i 's/GPSTRACK/'"$SETUP_TITLE"'/g' /opt/traccar/web/release.html
 sed -i 's/ATTRIB_NAME/'"$ATTRIB_NAME"'/g' /opt/traccar/web/release.html
