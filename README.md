@@ -1,4 +1,4 @@
-# Traccar Mod with less generic UI
+# Traccar Mod with a less generic UI
 
 ## Docker quick setup
 
