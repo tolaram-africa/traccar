@@ -3,7 +3,8 @@
 # DEfaults
 SETUP_TITLE=${SETUP_TITLE:="GPS Track"}
 ATTRIB_NAME=${ATTRIB_NAME:="Traccar"}
-ATTRIB_LINK=${ATTRIB_LINK:="https://traccar.org"}
+PUBLIC_URL=${PUBLIC_URL:="https://traccar.org/"}
+ATTRIB_LINK=${ATTRIB_LINK:="https://traccar.org/"}
 SETUP_COLOR=${SETUP_COLOR:="01162B"}
 ##GEOCODE_LINK=${GEOCODE_LINK:="https://nominatim.openstreetmap.org/"}
 PLAY_LINK=${PLAY_LINK:="#"}
