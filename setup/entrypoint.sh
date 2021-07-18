@@ -5,7 +5,7 @@ SETUP_TITLE=${SETUP_TITLE:="GPS Track"}
 ATTRIB_NAME=${ATTRIB_NAME:="Traccar"}
 ATTRIB_LINK=${ATTRIB_LINK:="https://traccar.org"}
 SETUP_COLOR=${SETUP_COLOR:="01162B"}
-GEOCODE_LINK=${GEOCODE_LINK:="https://nominatim.openstreetmap.org/"}
+##GEOCODE_LINK=${GEOCODE_LINK:="https://nominatim.openstreetmap.org/"}
 PLAY_LINK=${PLAY_LINK:="#"}
 FRONT_LOGO_WIDTH=${FRONT_LOGO_WIDTH:="108"}
 FRONT_LOGO_HEIGHT=${FRONT_LOGO_HEIGHT:="32"}
@@ -27,8 +27,8 @@ sed -i 's#ATTRIB_LINK#'"$ATTRIB_LINK"'#g' /opt/traccar/web/debug.html
 sed -i 's/808080/'"$SETUP_COLOR"'/g' /opt/traccar/web/assets/mod.css
 
 ## Set for address search
-sed -i 's#https://nominatim.openstreetmap.org/#'"$GEOCODE_LINK"'#g' /opt/traccar/web/assets/ol-geocoder.js
-sed -i 's#https://nominatim.openstreetmap.org/#'"$GEOCODE_LINK"'#g' /opt/traccar/web/assets/ol-geocoder.js.map
+##sed -i 's#https://nominatim.openstreetmap.org/#'"$GEOCODE_LINK"'#g' /opt/traccar/web/assets/ol-geocoder.js
+##sed -i 's#https://nominatim.openstreetmap.org/#'"$GEOCODE_LINK"'#g' /opt/traccar/web/assets/ol-geocoder.js.map
 
 ## Set public url for web
 sed -i 's#$webUrl#'"$PUBLIC_URL"'#g' /opt/traccar/templates/full/passwordReset.vm
