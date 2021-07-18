@@ -20,7 +20,7 @@ services:
         condition: on-failure
       resources:
         limits:
-          cpus: "2"
+          cpus: "1"
           memory: 4G
         reservations:
           cpus: "0.1"
