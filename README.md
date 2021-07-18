@@ -1,4 +1,4 @@
-# [Traccar](https://www.traccar.org)
+# Traccar Mod with less generic UI
 
 ## Docker quick setup
 
