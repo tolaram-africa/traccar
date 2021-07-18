@@ -14,7 +14,8 @@ sed -i 's#ATTRIB_LINK#'"$ATTRIB_LINK"'#g' /opt/traccar/web/debug.html
 sed -i 's/808080/'"$SETUP_COLOR"'/g' /opt/traccar/web/assets/mod.css
 
 ## Set for address search
-sed -i 's#https://geocoder.bhn.ng#'"$GEOCODE_LINK"'#g' /opt/traccar/web/assets/address.ol.js
+sed -i 's#https://nominatim.openstreetmap.org/#'"$GEOCODE_LINK"'#g' /opt/traccar/web/assets/ol-geocoder.js
+sed -i 's#https://nominatim.openstreetmap.org/#'"$GEOCODE_LINK"'#g' /opt/traccar/web/assets/ol-geocoder.js.map
 
 ## Set public url for web
 sed -i 's#$webUrl#'"$PUBLIC_URL"'#g' /opt/traccar/templates/full/passwordReset.vm
