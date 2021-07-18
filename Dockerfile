@@ -1,6 +1,7 @@
 FROM debian:buster as builder
 
 WORKDIR /build/
+# TODO: Change this to a proper build script
 COPY setup/environment.sh .
 RUN chmod +x environment.sh && ./environment.sh
 
