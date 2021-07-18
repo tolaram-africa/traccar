@@ -13,7 +13,6 @@
     <entry key='geocoder.enable'>true</entry>
     <entry key='geocoder.type'>nominatim</entry>
     <entry key='geocoder.url'>https://nominatim.openstreetmap.org/reverse</entry>
-    <!-- More geoCODER configurations -->
     <entry key='geocoder.onRequest'>true</entry>
     <entry key='geocoder.processInvalidPositions'>false</entry>
     <entry key='geocoder.ignorePositions'>false</entry>
