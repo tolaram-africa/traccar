@@ -775,7 +775,7 @@ public final class Keys {
         /**
          * Filter positions with exactly zero speed values.
          */
-        public static final ConfigKey<Boolean> FILTER_STATIC_ALL = new ConfigKey<>("filter.StaticAll",
+        public static final ConfigKey<Boolean> FILTER_STATIC_ALL = new ConfigKey<>("filter.staticAll",
                         Collections.singletonList(KeyType.GLOBAL));
 
         /**
