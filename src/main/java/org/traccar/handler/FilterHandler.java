@@ -37,7 +37,7 @@ public class FilterHandler extends BaseDataHandler {
     private boolean filterApproximate;
     private int filterAccuracy;
     private boolean filterStatic;
-    private boolean filterAllStatic;
+    private boolean filterStaticAll;
     private long filterCourse;
     private int filterDistance;
     private int filterMaxSpeed;
@@ -53,7 +53,7 @@ public class FilterHandler extends BaseDataHandler {
         filterAccuracy = config.getInteger(Keys.FILTER_ACCURACY);
         filterApproximate = config.getBoolean(Keys.FILTER_APPROXIMATE);
         filterStatic = config.getBoolean(Keys.FILTER_STATIC);
-        filterAllStatic = config.getBoolean(Keys.FILTER_ALL_STATIC);
+        filterStaticAll = config.getBoolean(Keys.FILTER_STATIC_ALL);
         filterCourse = config.getLong(Keys.FILTER_COURSE);
         filterDistance = config.getInteger(Keys.FILTER_DISTANCE);
         filterMaxSpeed = config.getInteger(Keys.FILTER_MAX_SPEED);
@@ -63,9 +63,8 @@ public class FilterHandler extends BaseDataHandler {
     }
 
     private boolean filterInvalid(Position position) {
-        return filterInvalid && (!position.getValid()
-        || position.getLatitude() > 90 || position.getLongitude() > 180
-        || position.getLatitude() < -90 || position.getLongitude() < -180);
+        return filterInvalid && (!position.getValid() || position.getLatitude() > 90 || position.getLongitude() > 180
+                || position.getLatitude() < -90 || position.getLongitude() < -180);
     }
 
     private boolean filterZero(Position position) {
@@ -97,16 +96,16 @@ public class FilterHandler extends BaseDataHandler {
     }
 
     private boolean filterStatic(Position position, Position last) {
-        if (last != null && !filterAllStatic) {
+        if (last != null && !filterStaticAll) {
             return filterStatic && (position.getSpeed() == 0.0 && last.getSpeed() == 0.0);
-        } else if (filterAllStatic) {
+        } else if (filterStaticAll) {
             return filterStatic && position.getSpeed() == 0.0;
         }
         return false;
     }
 
     private boolean filterCourse(Position position, Position last) {
-        if (filterCourse != 0 && last != null && !position.getBoolean(last.KEY_MOTION)) {
+        if (filterCourse != 0 && last != null) {
             double course = position.getCourse() - last.getCourse();
             if (course < 0) {
                 return (-1 * course) < filterCourse;
@@ -118,7 +117,7 @@ public class FilterHandler extends BaseDataHandler {
     }
 
     private boolean filterDistance(Position position, Position last) {
-        if (filterDistance != 0 && last != null && !last.getBoolean(last.KEY_MOTION)) {
+        if (filterDistance != 0 && last != null) {
             return position.getDouble(Position.KEY_DISTANCE) < filterDistance;
         }
         return false;
@@ -150,8 +149,8 @@ public class FilterHandler extends BaseDataHandler {
 
     private boolean skipAttributes(Position position) {
         if (skipAttributes) {
-            String attributesString = Context.getIdentityManager().lookupAttributeString(
-                    position.getDeviceId(), "filter.skipAttributes", "", false, true);
+            String attributesString = Context.getIdentityManager().lookupAttributeString(position.getDeviceId(),
+                    "filter.skipAttributes", "", false, true);
             for (String attribute : attributesString.split("[ ,]")) {
                 if (position.getAttributes().containsKey(attribute)) {
                     return true;
@@ -191,12 +190,11 @@ public class FilterHandler extends BaseDataHandler {
         if (filterStatic(position, last) && !skipLimit(position, last) && !skipAttributes(position)) {
             filterType.append("Static ");
         }
-        if (filterCourse(position, last) && !skipLimit(position, last)
-                && !filterStatic(position, last) && !skipAttributes(position)) {
+        if (filterCourse(position, last) && !filterStatic(position, last) && !skipAttributes(position)) {
             filterType.append("Course ");
         }
-        if (filterDistance(position, last) && !skipLimit(position, last)
-                && !filterStatic(position, last) && !skipAttributes(position)) {
+        if (filterDistance(position, last) && !skipLimit(position, last) && !filterStatic(position, last)
+                && !skipAttributes(position)) {
             filterType.append("Distance ");
         }
         if (filterMaxSpeed(position, last)) {
