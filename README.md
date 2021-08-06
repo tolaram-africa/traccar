@@ -6,7 +6,7 @@
 sudo docker run -d \
 --restart=always \
 --name=traccar \
--e SETUP_TITLE="TRACCAR" \
+-e SETUP_TITLE="TRACCAR MOD" \
 -e ATTRIB_NAME="traccar" \
 -e ATTRIB_LINK="https://traccar.org/" \
 -e PLAY_LINK="#" \
