@@ -792,6 +792,12 @@ public final class Keys {
                         Collections.singletonList(KeyType.GLOBAL));
 
         /**
+         * Allows permitting saving after info have been filtered past the max allowed.
+         */
+        public static final ConfigKey<Integer> FILTER_DISTANCE_MAX_SKIP = new ConfigKey<>("filter.distanceMaxSkip",
+          Collections.singletonList(KeyType.GLOBAL));
+
+        /**
          * Filter records by Maximum Speed value in knots. Can be used to filter jumps
          * to far locations even if they're marked as valid. Shouldn't be too low. Start
          * testing with values at about 25000.
