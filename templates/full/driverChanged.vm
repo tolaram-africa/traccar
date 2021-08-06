@@ -5,10 +5,10 @@
 Device: $device.name<br>
 Driver: #{if}($driver)$driver.name#{else}$event.getString("driverUniqueId")#{end}<br>
 <br>
-Time: $dateTool.format("YYYY-MM-dd HH:mm:ss", $event.eventTime, $locale, $timezone)<br>
+Time: $dateTool.format("YY-MM-dd HH:mm", $event.eventTime, $locale, $timezone)<br>
 Location: <a href="http://maps.google.com/maps?f=q&q=$position.latitude,$position.longitude&z=16">#{if}($position.address)$position.address#{else}$position.latitude&deg;, $position.longitude&deg;#{end}</a><br>
 <br>
 Lat: $position.latitude&deg;<br>
 Lon: $position.longitude&deg;<br>
 </body>
-</html>  
+</html>

@@ -127,7 +127,9 @@ public class PermissionsManager {
 
     public Set<Long> getDeviceUsers(long deviceId) {
         Device device = Context.getIdentityManager().getById(deviceId);
-        if (device != null && !device.getDisabled()) {
+        boolean deviceExpired = device.getExpiration() != null
+          && System.currentTimeMillis() > device.getExpiration().getTime();
+        if (device != null && !device.getDisabled() && !deviceExpired) {
             return getAllDeviceUsers(deviceId);
         } else {
             Set<Long> result = new HashSet<>();

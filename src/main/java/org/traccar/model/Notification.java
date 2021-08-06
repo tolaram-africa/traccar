@@ -34,6 +34,21 @@ public class Notification extends ScheduledModel {
         this.always = always;
     }
 
+    /**
+     * Godwin peter .O <me@godwin.dev>
+     *
+     * Custom field
+     * **/
+    private String name;
+
+    public String getName() {
+      return name;
+    }
+
+    public void setName(String name) {
+      this.name = name;
+    }
+
     private String type;
 
     public String getType() {

@@ -121,10 +121,18 @@ public abstract class BaseProtocolDecoder extends ExtendedObjectDecoder {
             if (deviceId == 0 && config.getBoolean(Keys.DATABASE_REGISTER_UNKNOWN)) {
                 return identityManager.addUnknownDevice(uniqueIds[0]);
             }
-            if (device != null && !device.getDisabled()) {
+
+            // Device expiration check
+            boolean deviceExpired = device != null && device.getExpiration() != null
+              && System.currentTimeMillis() > device.getExpiration().getTime();
+
+            if (device != null && !device.getDisabled() && !deviceExpired) {
                 return deviceId;
             }
             StringBuilder message = new StringBuilder();
+            if (deviceExpired) {
+              message.append("Expired device -");
+            }
             if (deviceId == 0) {
                 message.append("Unknown device -");
             } else {

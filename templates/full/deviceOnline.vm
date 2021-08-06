@@ -4,9 +4,9 @@
 <body>
 Asset: $device.name<br>
 Event: device Online<br>
-Time: $dateTool.format("YYYY-MM-dd HH:mm:ss", $event.eventTime, $locale, $timezone)<br>
+Time: $dateTool.format("YY-MM-dd HH:mm", $event.eventTime, $locale, $timezone)<br>
 <!--Link: <a href="$webUrl?eventId=$event.id">$webUrl?eventId=$event.id</a>-->
 <br>
 <br>
 </body>
-</html>  
+</html>

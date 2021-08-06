@@ -40,6 +40,7 @@ public class FilterHandler extends BaseDataHandler {
     private boolean filterStaticAll;
     private long filterCourse;
     private int filterDistance;
+    private int getFilterDistanceMaxSkip;
     private int filterMaxSpeed;
     private long filterMinPeriod;
     private long skipLimit;
@@ -56,6 +57,7 @@ public class FilterHandler extends BaseDataHandler {
         filterStaticAll = config.getBoolean(Keys.FILTER_STATIC_ALL);
         filterCourse = config.getLong(Keys.FILTER_COURSE);
         filterDistance = config.getInteger(Keys.FILTER_DISTANCE);
+        getFilterDistanceMaxSkip = config.getInteger(Keys.FILTER_DISTANCE_MAX_SKIP);
         filterMaxSpeed = config.getInteger(Keys.FILTER_MAX_SPEED);
         filterMinPeriod = config.getInteger(Keys.FILTER_MIN_PERIOD) * 1000;
         skipLimit = config.getLong(Keys.FILTER_SKIP_LIMIT) * 1000;
@@ -97,7 +99,7 @@ public class FilterHandler extends BaseDataHandler {
 
     private boolean filterStatic(Position position, Position last) {
         if (last != null && !filterStaticAll) {
-            return filterStatic && (position.getSpeed() == 0.0 && last.getSpeed() == 0.0);
+            return filterStatic && position.getSpeed() == 0.0 && last.getSpeed() == 0.0;
         } else if (filterStaticAll) {
             return filterStatic && position.getSpeed() == 0.0;
         }
@@ -107,17 +109,19 @@ public class FilterHandler extends BaseDataHandler {
     private boolean filterCourse(Position position, Position last) {
         if (filterCourse != 0 && last != null) {
             double course = position.getCourse() - last.getCourse();
+            boolean maxDistanceSkip = position.getDouble(Position.KEY_DISTANCE) < getFilterDistanceMaxSkip;
             if (course < 0) {
-                return (-1 * course) < filterCourse;
+                return (-1 * course) < filterCourse || maxDistanceSkip;
             } else {
-                return course < filterCourse;
+                return course < filterCourse || maxDistanceSkip;
             }
         }
         return false;
     }
 
     private boolean filterDistance(Position position, Position last) {
-        if (filterDistance != 0 && last != null) {
+        if (filterDistance != 0 && last != null && !last.getBoolean(last.KEY_MOTION)
+        && position.getAttributes().get(Position.KEY_IGNITION).equals(false)) {
             return position.getDouble(Position.KEY_DISTANCE) < filterDistance;
         }
         return false;
@@ -193,8 +197,8 @@ public class FilterHandler extends BaseDataHandler {
         if (filterCourse(position, last) && !filterStatic(position, last) && !skipAttributes(position)) {
             filterType.append("Course ");
         }
-        if (filterDistance(position, last) && !skipLimit(position, last) && !filterStatic(position, last)
-                && !skipAttributes(position)) {
+        if (filterDistance(position, last) && !filterCourse(position, last) && !skipLimit(position, last)
+          && !skipAttributes(position)) {
             filterType.append("Distance ");
         }
         if (filterMaxSpeed(position, last)) {
