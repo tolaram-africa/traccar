@@ -43,7 +43,17 @@ public class Geofence extends ScheduledModel {
         this.name = name;
     }
 
-    private String description;
+    private String tag;
+
+    public String getTag() {
+      return tag;
+    }
+
+    public void setTag(String tag) {
+      this.tag = tag;
+    }
+
+  private String description;
 
     public String getDescription() {
         return description;
