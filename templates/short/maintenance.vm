@@ -1,1 +1,1 @@
-$device.name maintenance $maintenance.name is required at $dateTool.format("YYYY-MM-dd HH:mm:ss", $event.eventTime, $locale, $timezone) at $position.address
+$device.name maintenance $maintenance.name is required at $dateTool.format("YY-MM-dd HH:mm", $event.eventTime, $locale, $timezone) at $position.address

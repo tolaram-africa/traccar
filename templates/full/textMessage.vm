@@ -4,8 +4,8 @@
 <body>
 Asset: $device.name<br>
 <br>
-Time: $dateTool.format("YYYY-MM-dd HH:mm:ss", $event.eventTime, $locale, $timezone)<br>
+Time: $dateTool.format("YY-MM-dd HH:mm", $event.eventTime, $locale, $timezone)<br>
 Message:  $event.getString("message")<br>
 
 </body>
-</html>  
+</html>

@@ -1,1 +1,1 @@
-$device.name exited geofence $geofence.name on $dateTool.format("YYYY-MM-dd HH:mm:ss", $event.eventTime, $locale, $timezone) at $position.address
+$device.name left zone [$geofence.name] $position.address on $dateTool.format("YY-MM-dd HH:mm", $event.eventTime, $locale, $timezone)
