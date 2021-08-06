@@ -110,7 +110,7 @@ public class FilterHandler extends BaseDataHandler {
         if (filterCourse != 0 && last != null) {
             double course = position.getCourse() - last.getCourse();
             boolean maxDistanceSkip;
-            if(filterDistanceMaxSkip != 0) {
+            if (filterDistanceMaxSkip != 0) {
               maxDistanceSkip = position.getDouble(Position.KEY_DISTANCE) < filterDistanceMaxSkip;
             } else {
               maxDistanceSkip = false;
@@ -126,8 +126,12 @@ public class FilterHandler extends BaseDataHandler {
     }
 
     private boolean filterDistance(Position position, Position last) {
+        boolean ignitionAttribute = true;
+        if (position.getAttributes().get(Position.KEY_IGNITION) != null) {
+            ignitionAttribute = position.getAttributes().get(Position.KEY_IGNITION).equals(false);
+        }
         if (filterDistance != 0 && last != null && !last.getBoolean(last.KEY_MOTION)
-        && position.getAttributes().get(Position.KEY_IGNITION).equals(false)) {
+        && ignitionAttribute) {
             return position.getDouble(Position.KEY_DISTANCE) < filterDistance;
         }
         return false;
