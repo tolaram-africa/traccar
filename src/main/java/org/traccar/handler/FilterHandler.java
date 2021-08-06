@@ -40,7 +40,7 @@ public class FilterHandler extends BaseDataHandler {
     private boolean filterStaticAll;
     private long filterCourse;
     private int filterDistance;
-    private int getFilterDistanceMaxSkip;
+    private int filterDistanceMaxSkip;
     private int filterMaxSpeed;
     private long filterMinPeriod;
     private long skipLimit;
@@ -57,7 +57,7 @@ public class FilterHandler extends BaseDataHandler {
         filterStaticAll = config.getBoolean(Keys.FILTER_STATIC_ALL);
         filterCourse = config.getLong(Keys.FILTER_COURSE);
         filterDistance = config.getInteger(Keys.FILTER_DISTANCE);
-        getFilterDistanceMaxSkip = config.getInteger(Keys.FILTER_DISTANCE_MAX_SKIP);
+        filterDistanceMaxSkip = config.getInteger(Keys.FILTER_DISTANCE_MAX_SKIP);
         filterMaxSpeed = config.getInteger(Keys.FILTER_MAX_SPEED);
         filterMinPeriod = config.getInteger(Keys.FILTER_MIN_PERIOD) * 1000;
         skipLimit = config.getLong(Keys.FILTER_SKIP_LIMIT) * 1000;
@@ -109,7 +109,13 @@ public class FilterHandler extends BaseDataHandler {
     private boolean filterCourse(Position position, Position last) {
         if (filterCourse != 0 && last != null) {
             double course = position.getCourse() - last.getCourse();
-            boolean maxDistanceSkip = position.getDouble(Position.KEY_DISTANCE) < getFilterDistanceMaxSkip;
+            boolean maxDistanceSkip;
+            if(filterDistanceMaxSkip != 0) {
+              maxDistanceSkip = position.getDouble(Position.KEY_DISTANCE) < filterDistanceMaxSkip;
+            } else {
+              maxDistanceSkip = false;
+            }
+
             if (course < 0) {
                 return (-1 * course) < filterCourse || maxDistanceSkip;
             } else {
