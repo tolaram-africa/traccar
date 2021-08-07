@@ -112,7 +112,7 @@ public class FilterHandler extends BaseDataHandler {
             boolean maxDistanceSkip = filterDistanceMaxSkip != 0
               && position.getDouble(Position.KEY_DISTANCE) < filterDistanceMaxSkip;
             return course < 0 ? (-1 * course) < filterCourse
-              || maxDistanceSkip : course < filterCourse || maxDistanceSkip;
+              && maxDistanceSkip : course < filterCourse && maxDistanceSkip;
         }
         return false;
     }
