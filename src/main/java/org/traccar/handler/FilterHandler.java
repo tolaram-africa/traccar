@@ -111,17 +111,21 @@ public class FilterHandler extends BaseDataHandler {
             double course = position.getCourse() - last.getCourse();
             boolean maxDistanceSkip = filterDistanceMaxSkip != 0
               && position.getDouble(Position.KEY_DISTANCE) < filterDistanceMaxSkip;
+            boolean checkIgnitionMotion = position.getAttributes().get(Position.KEY_IGNITION) != null
+              && position.getAttributes().get(Position.KEY_IGNITION).equals(true)
+              && last != null && last.getBoolean(last.KEY_MOTION);
             return course < 0 ? (-1 * course) < filterCourse
-              && maxDistanceSkip : course < filterCourse && maxDistanceSkip;
+              && maxDistanceSkip && checkIgnitionMotion : course < filterCourse
+              && maxDistanceSkip && checkIgnitionMotion;
         }
         return false;
     }
 
     private boolean filterDistance(Position position, Position last) {
-        boolean ignition = position.getAttributes().get(Position.KEY_IGNITION) != null
-          && position.getAttributes().get(Position.KEY_IGNITION).equals(true);
-        boolean lastMotion = last != null && last.getBoolean(last.KEY_MOTION);
-        if (filterDistance != 0 && last != null && ignition && lastMotion) {
+        boolean checkIgnitionMotion = position.getAttributes().get(Position.KEY_IGNITION) != null
+          && position.getAttributes().get(Position.KEY_IGNITION).equals(true)
+          && last != null && last.getBoolean(last.KEY_MOTION);
+        if (filterDistance != 0 && checkIgnitionMotion) {
             return position.getDouble(Position.KEY_DISTANCE) < filterDistance;
         }
         return false;
