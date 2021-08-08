@@ -99,9 +99,9 @@ public class FilterHandler extends BaseDataHandler {
 
     private boolean filterStatic(Position position, Position last) {
         if (last != null && !filterStaticAll) {
-            return filterStatic && position.getSpeed() == 0.0 && last.getSpeed() == 0.0;
+            return filterStatic && position.getSpeed() == 0 && last.getSpeed() == 0;
         } else if (filterStaticAll) {
-            return filterStatic && position.getSpeed() == 0.0;
+            return filterStatic && position.getSpeed() == 0;
         }
         return false;
     }
@@ -213,12 +213,13 @@ public class FilterHandler extends BaseDataHandler {
         if (filterStatic(position, last) && !skipLimit(position, last) && !skipAttributes(position)) {
             filterType.append("Static ");
         }
-        if (filterCourse(position, last) && !filterStatic(position, last) && !skipAttributes(position)) {
-            filterType.append("Course ");
-        }
         if (filterDistance(position, last) && !filterCourse(position, last) && !skipLimit(position, last)
           && !skipAttributes(position)) {
             filterType.append("Distance ");
+        }
+        if (filterCourse(position, last) && !filterStatic(position, last) && !skipLimit(position, last)
+          && !skipAttributes(position)) {
+          filterType.append("Course ");
         }
         if (filterMaxSpeed(position, last)) {
             filterType.append("MaxSpeed ");
