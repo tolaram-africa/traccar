@@ -108,9 +108,14 @@ public class FilterHandler extends BaseDataHandler {
 
     private boolean filterCourse(Position position, Position last) {
         if (filterCourse != 0 && last != null) {
+            double distance = position.getDouble(Position.KEY_DISTANCE)
+            == position.getDouble(Position.KEY_TOTAL_DISTANCE)
+            ? position.getDouble(Position.KEY_TOTAL_DISTANCE)
+            - last.getDouble(Position.KEY_TOTAL_DISTANCE)
+            : position.getDouble(Position.KEY_DISTANCE);
             double course = position.getCourse() - last.getCourse();
             boolean maxDistanceSkip = filterDistanceMaxSkip != 0
-              && position.getDouble(Position.KEY_DISTANCE) < filterDistanceMaxSkip;
+              && distance < filterDistanceMaxSkip;
             boolean checkIgnitionMotion = position.getAttributes().get(Position.KEY_IGNITION) != null
               && position.getAttributes().get(Position.KEY_IGNITION).equals(true)
               && last != null && last.getBoolean(last.KEY_MOTION);
@@ -125,15 +130,25 @@ public class FilterHandler extends BaseDataHandler {
         boolean checkIgnitionMotion = position.getAttributes().get(Position.KEY_IGNITION) != null
           && position.getAttributes().get(Position.KEY_IGNITION).equals(true)
           && last != null && last.getBoolean(last.KEY_MOTION);
-        if (filterDistance != 0 && checkIgnitionMotion) {
-            return position.getDouble(Position.KEY_DISTANCE) < filterDistance;
+        if (filterDistance != 0 && last != null && checkIgnitionMotion) {
+          double distance = position.getDouble(Position.KEY_DISTANCE)
+            == position.getDouble(Position.KEY_TOTAL_DISTANCE)
+            ? position.getDouble(Position.KEY_TOTAL_DISTANCE)
+              - last.getDouble(Position.KEY_TOTAL_DISTANCE)
+            : position.getDouble(Position.KEY_DISTANCE);
+
+            return distance < filterDistance;
         }
         return false;
     }
 
     private boolean filterMaxSpeed(Position position, Position last) {
         if (filterMaxSpeed != 0 && last != null) {
-            double distance = position.getDouble(Position.KEY_DISTANCE);
+          double distance = position.getDouble(Position.KEY_DISTANCE)
+            == position.getDouble(Position.KEY_TOTAL_DISTANCE)
+            ? position.getDouble(Position.KEY_TOTAL_DISTANCE)
+            - last.getDouble(Position.KEY_TOTAL_DISTANCE)
+            : position.getDouble(Position.KEY_DISTANCE);
             double time = position.getFixTime().getTime() - last.getFixTime().getTime();
             return UnitsConverter.knotsFromMps(distance / (time / 1000)) > filterMaxSpeed;
         }
