@@ -17,7 +17,7 @@ sudo docker run -d \
 -e SETUP_COLOR="808080" \
 -e GEOCODE_LINK="https://nominatim.openstreetmap.org/" \
 -e GOOGLE_API_KEY="google-api-key" \
--e PUBLIC_URL="https://traccar.org/"\
+-e PUBLIC_URL="https://traccar.org/" \
 --ulimit nofile=10240000:10240000 \
 --ulimit nproc=10240000:10240000 \
 -p 8082:8082 \
