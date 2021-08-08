@@ -118,7 +118,7 @@ public class FilterHandler extends BaseDataHandler {
               && distance < filterDistanceMaxSkip;
             boolean checkIgnitionMotion = position.getAttributes().get(Position.KEY_IGNITION) != null
               && position.getAttributes().get(Position.KEY_IGNITION).equals(true)
-              && last != null && last.getBoolean(last.KEY_MOTION);
+              && last.getBoolean(last.KEY_MOTION);
             return course < 0 ? (-1 * course) < filterCourse
               && maxDistanceSkip && checkIgnitionMotion : course < filterCourse
               && maxDistanceSkip && checkIgnitionMotion;
@@ -130,7 +130,7 @@ public class FilterHandler extends BaseDataHandler {
         boolean checkIgnitionMotion = position.getAttributes().get(Position.KEY_IGNITION) != null
           && position.getAttributes().get(Position.KEY_IGNITION).equals(true)
           && last != null && last.getBoolean(last.KEY_MOTION);
-        if (filterDistance != 0 && last != null && checkIgnitionMotion) {
+        if (filterDistance != 0 && checkIgnitionMotion) {
           double distance = position.getDouble(Position.KEY_DISTANCE)
             == position.getDouble(Position.KEY_TOTAL_DISTANCE)
             ? position.getDouble(Position.KEY_TOTAL_DISTANCE)
