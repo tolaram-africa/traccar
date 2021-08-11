@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: gpproton/traccar:latest,gpproton/traccar:4.13,gpproton/traccar:4.13.2,gpproton/traccar:4.13.2.4
+          tags: gpproton/traccar:latest,gpproton/traccar:4.13,gpproton/traccar:4.13.2,gpproton/traccar:4.13.2.5
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
